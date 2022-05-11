@@ -5,7 +5,7 @@
 Bliu is a magic word created by Professor Cerginho da Pereira Nunes in his desperate times. 
 
 It means everything and nothing.
-But What it means for this specific Vue components? You could ask me, and my answer to you would be: Nothing.
+"But what it means for this specific Vue components?" You could ask me. And my answer to you would be: Nothing.
 Sorry, but it is kind of an internal joke for *some* brazilians. I don't expect you to understand. 😂
 
 #### Ok, Now let's explain the components!
