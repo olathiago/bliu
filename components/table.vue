@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 	import { PropType } from 'vue'
-	import { TableColumns, TableRows } from '.'
+	import { TableColumns, TableRows } from '../types'
 
 	const props = defineProps({
 		tableData: {

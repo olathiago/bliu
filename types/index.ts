@@ -1,6 +1,3 @@
-export { default as BTable } from './table.vue'
-export { default as BForm } from './form.vue'
-
 type FormTypes = 'text' | 'color' | 'number' | 'email' | 'tel' | 'textarea' | 'checkbox' | 'date' | 'password'
 
 export type FormOptions = {

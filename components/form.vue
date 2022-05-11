@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 	import { PropType } from 'vue'
-	import { FormOptions } from './'
+	import { FormOptions } from '../types'
 
 	const props = defineProps({
 		formOptions: {
