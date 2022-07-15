@@ -20,7 +20,7 @@
 					<td v-for="(row, rowIndex) in props.rows" :key="rowIndex" :class="!row.responsive ? 'mobile_hidden' : props.tableValuesClass">
 						<p v-for="(data, index) in row.value" :key="index">
 							<span v-if="data">
-								{{ primary_table_data('source', data, source) }}
+								{{ primary_table_data(source, data) }}
 							</span>
 							<span v-if="index + 1 < row.value.length">,&nbsp;</span>
 						</p>
@@ -34,11 +34,11 @@
 
 <script setup lang="ts">
 	import { PropType } from 'vue'
-	import { TableColumns, TableRows } from '../types'
+	import { FormOptions, TableColumns, TableRows } from '../types'
 
 	const props = defineProps({
 		tableData: {
-			type: Array as PropType<object[]>,
+			type: Array as PropType<FormOptions[]>,
 			required: true
 		},
 		columns: {
@@ -66,12 +66,15 @@
 			default: 'tableValuesClass'
 		}
 	})
-
-	function primary_table_data(item: string, data: string, source: object) {
-		// eslint-disable-next-line no-eval
-		const selected = eval(`${item}.${data}`)
-
-		return selected
+	function nestedPath(item: object, props: string) {
+		const propsSplitted = props.split('.')
+		return propsSplitted.reduce((prev: any, current: string) => {
+			const result = prev && prev[current]
+			return result
+		}, item)
+	}
+	function primary_table_data(item: object, data: string) {
+		return nestedPath(item, data)
 	}
 </script>
 

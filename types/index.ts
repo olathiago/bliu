@@ -10,6 +10,11 @@ export type FormOptions = {
 	max?: number
 	comment?: string
 	pattern?: string
+	nested: {
+		nested: {
+			nested: number
+		}
+	}
 }
 
 export type TableColumns = {
