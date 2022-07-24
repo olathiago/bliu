@@ -6,13 +6,13 @@
 				<div>
 					<!-- ARROW TO LEFT / PREVIOUS IMAGE -->
 					<div v-if="data.currentImage?.prev" class="pointer" :class="props.arrowsContainerClass" @click="navigateArrows('prev')">
-						<img :src="getArrowsUrl(props.arrowsSource.left)" alt="Previous image" class="flex justify-center w-full" />
+						<img src="./arrows/left.svg" alt="Previous image" class="flex justify-center w-full" />
 					</div>
 				</div>
 				<div>
 					<!-- ARROW TO RIGHT / PREVIOUS IMAGE -->
 					<div v-if="data.currentImage?.next" class="pointer" :class="props.arrowsContainerClass" @click="navigateArrows('next')">
-						<img :src="getArrowsUrl(props.arrowsSource.right)" alt="Next image" class="flex justify-center w-full" />
+						<img src="./arrows/right.svg" alt="Next image" class="flex justify-center w-full" />
 					</div>
 				</div>
 			</div>
@@ -79,16 +79,6 @@
 		arrowsContainerClass: {
 			type: String,
 			default: 'arrows'
-		},
-		/**
-		 * An object containing "left" and "right" fields. Values are strings to URLs or local paths to images that represent the arrows of your carousel.
-		 */
-		arrowsSource: {
-			type: Object as PropType<{ left: string; right: string }>,
-			default: {
-				left: './assets/arrow-left.svg',
-				right: './assets/arrow-right.svg'
-			}
 		},
 		/**
 		 * You can use css frameworks here or your custom classes to define the style of the navigation bullet's container.
