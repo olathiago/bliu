@@ -17,7 +17,7 @@ I chose to do this way because it gives you more flexibility for customizing the
 
 ## Documentation
 
-You can access the docs by opening it's dedicated Storybook DocPage to see components properties and their descriptions: 
+You can access the docs by opening it's dedicated Storybook DocPage to see components properties and their descriptions: 🚩 https://bliu.netlify.app/ 🚩
 
 ### Types
 
