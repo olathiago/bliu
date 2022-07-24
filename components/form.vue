@@ -1,10 +1,10 @@
 <template>
-	<div v-for="(input, index) in props.formOptions" :key="index" :class="props.blocksClass">
+	<div v-for="(input, index) in FormData" :key="index" :class="props.blocksClass">
 		<fieldset>
 			<div :class="props.labelClass">
 				<label :for="input.id">{{ input.label }}</label>
 				<label v-if="input.max && input.type !== 'color' && input.type !== 'number' && typeCondition(input.model, 'string')">
-					{{ String(input.model).length }}/{{ input.max }}
+					{{ (input.model as string).length }}/{{ input.max }}
 				</label>
 			</div>
 
@@ -49,39 +49,67 @@
 </template>
 
 <script setup lang="ts">
-	import { PropType } from 'vue'
-	import { FormOptions } from '../types'
+	import { PropType, ref } from 'vue'
+	import { FormOptions } from '../stories/typesAndData'
 
 	const props = defineProps({
+		/**
+		 * **This field is required.**
+		 *
+		 * You can see "FormOptions" type definition inside the component file.
+		 * It's a pattern that you need to follow for this form to work.
+		 */
 		formOptions: {
 			type: Array as PropType<FormOptions[]>,
 			required: true
 		},
+		/**
+		 * You can use css frameworks here or your custom classes to define the style of a block containing a label element, an input element and a paragraph element.
+		 */
 		blocksClass: {
 			type: String,
 			default: 'blocksClass'
 		},
+		/**
+		 * Labels are the "titles". They are placed right above of inputs, textarea, etc.
+		 * You can use css frameworks here or your custom classes to define their style.
+		 */
 		labelClass: {
 			type: String,
 			default: 'labelClass'
 		},
+		/**
+		 * You can use css frameworks here or your custom classes to define the style
+		 */
 		inputClass: {
 			type: String,
-			default: 'inputText'
+			default: 'inputClass'
 		},
+		/**
+		 * You can use css frameworks here or your custom classes **to customize textarea elements styles**.
+		 */
 		textareaClass: {
 			type: String,
 			default: 'textareaClass'
 		},
+		/**
+		 * You can use css frameworks here or your custom classes **to define the style of your optional *"comment"* field**.
+		 */
 		commentClass: {
 			type: String,
 			default: 'commentClass'
 		},
+		/**
+		 * It has a single html input element with "checkbox" type.
+		 * You can customize it with css classes. It has a nice default class for switches.
+		 */
 		checkboxClass: {
 			type: String,
 			default: 'switch_1'
 		}
 	})
+
+	const FormData = ref(props.formOptions)
 
 	function typeCondition(value: string | number | boolean, type: string) {
 		if (typeof value === type) {
@@ -95,6 +123,8 @@
 		margin: 0.8rem 0;
 	}
 	.blocksClass {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: small;
 		margin: 0.8rem 0;
 	}
 	.labelClass {
@@ -104,16 +134,16 @@
 		justify-content: space-between;
 		margin: 0;
 	}
-	.inputText {
+	.inputClass {
 		background-color: rgb(245, 245, 245);
 		width: 100%;
 		border-radius: 0.35rem;
 		border: none;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.295);
-		padding: 8px 0;
+		padding: 8px 0.7rem;
 		margin: 0;
 	}
-	.inputText:focus {
+	.inputClass:focus {
 		outline: none;
 	}
 	.textareaClass {
@@ -122,7 +152,7 @@
 		border-radius: 0.35rem;
 		border: none;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.295);
-		padding: 8px 0;
+		padding: 8px 0.7rem;
 		margin: 0;
 	}
 	.textareaClass:focus {

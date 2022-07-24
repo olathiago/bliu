@@ -16,13 +16,3 @@ export type FormOptions = {
 		}
 	}
 }
-
-export type TableColumns = {
-	value: string
-	responsive: boolean
-}
-
-export type TableRows = {
-	value: string[]
-	responsive: boolean
-}

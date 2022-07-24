@@ -2,28 +2,21 @@
 	<div>
 		<table v-if="props.tableData.length !== 0">
 			<!-- COLUMNS -->
-			<thead :class="props.tableHeadClass">
+			<thead :class="props.columnContainerClass">
 				<tr>
-					<th
-						v-for="(column, columnIndex) in props.columns"
-						:key="columnIndex"
-						:class="!column.responsive ? 'mobile_hidden' : props.tableHeadValueClass"
-					>
-						{{ column.value }}
+					<th v-for="(column, columnIndex) in props.columns" :key="columnIndex" :class="props.columnValueClass">
+						{{ column }}
 					</th>
 				</tr>
 			</thead>
 
 			<!-- ROWS -->
-			<tbody :class="props.tableBodyClass">
+			<tbody :class="props.rowContainerClass">
 				<tr v-for="(source, sourceIndex) in props.tableData" :key="sourceIndex">
-					<td v-for="(row, rowIndex) in props.rows" :key="rowIndex" :class="!row.responsive ? 'mobile_hidden' : props.tableValuesClass">
-						<p v-for="(data, index) in row.value" :key="index">
-							<span v-if="data">
-								{{ primary_table_data(source, data) }}
-							</span>
-							<span v-if="index + 1 < row.value.length">,&nbsp;</span>
-						</p>
+					<td v-for="(row, rowIndex) in props.rows" :key="rowIndex" :class="rowValueClass">
+						<span v-if="row">
+							{{ primary_table_data(source, row) }}
+						</span>
 					</td>
 				</tr>
 			</tbody>
@@ -34,43 +27,70 @@
 
 <script setup lang="ts">
 	import { PropType } from 'vue'
-	import { FormOptions, TableColumns, TableRows } from '../types'
 
 	const props = defineProps({
+		/**
+		 * **It's a required field.**
+		 *
+		 * It needs to be an array with objects containing the data you want.
+		 * *Values inside this array are objects.*
+		 */
 		tableData: {
-			type: Array as PropType<FormOptions[]>,
+			type: Array as PropType<Object[]>,
 			required: true
 		},
+		/**
+		 * This field is an array with strings inside that represents your table's columns.
+		 * It respescts the order of elements in the array.
+		 */
 		columns: {
-			type: Array as PropType<TableColumns[]>,
+			type: Array as PropType<string[]>,
 			required: true
 		},
+		/**
+		 * This field is an array of strings that needs to be in the same order of it's representing column.
+		 *
+		 * For nested values your string needs to use dot notation. ***Ex: [['nested.nested.value'], ['value'], ['nested.value']]***
+		 *
+		 */
 		rows: {
-			type: Array as PropType<TableRows[]>,
+			type: Array as PropType<string[]>,
 			required: true
 		},
-		tableHeadClass: {
+		/**
+		 * Here you can use css frameworks classes or your custom classes to define the style of **columns containers**.
+		 */
+		columnContainerClass: {
 			type: String,
-			default: 'headClass'
+			default: 'columnContainerClass'
 		},
-		tableHeadValueClass: {
+		/**
+		 * Here you can use css frameworks classes or your custom classes to define the style of **columns values**.
+		 */
+		columnValueClass: {
 			type: String,
-			default: 'headValueClass'
+			default: 'columnValueClass'
 		},
-		tableBodyClass: {
+		/**
+		 * Here you can use css frameworks classes or your custom classes to define the style of **rows containers**.
+		 */
+		rowContainerClass: {
 			type: String,
-			default: 'tableBodyClass'
+			default: 'rowContainerClass'
 		},
-		tableValuesClass: {
+		/**
+		 * Here you can use css frameworks classes or your custom classes to define the style of **rows values**.
+		 */
+		rowValueClass: {
 			type: String,
-			default: 'tableValuesClass'
+			default: 'rowValueClass'
 		}
 	})
+
 	function nestedPath(item: object, props: string) {
 		const propsSplitted = props.split('.')
 		return propsSplitted.reduce((prev: any, current: string) => {
-			const result = prev && prev[current]
-			return result
+			return prev[current]
 		}, item)
 	}
 	function primary_table_data(item: object, data: string) {
@@ -85,17 +105,23 @@
 		margin: 1.5rem auto;
 		border-collapse: collapse;
 	}
-	.tableBodyClass {
+	.rowContainerClass {
 		background-color: white;
 	}
-	.tableValuesClass {
+	.rowValueClass {
 		border-top: 1px solid rgb(231, 231, 231);
 		padding: 1rem;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: small;
 	}
-	.tableHeadClass {
-		background: rgb(221, 221, 221);
-		color: rgb(0, 0, 0);
+	.columnContainerClass {
+		background: rgb(255, 52, 103);
+		color: rgb(255, 255, 255);
 		text-align: left;
+	}
+	.columnValueClass {
+		padding: 0.7rem 1rem;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 
 	th:first-of-type {
